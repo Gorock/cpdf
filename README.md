@@ -7,6 +7,13 @@ A Python script that simplifies compressing pdf files with gs.
 
 ## Change Log
 
+### August 14th, 2019 - v1.2.1 Released - Cupcake - Python 3
+
+Released for Python Version 3 
+
+
+
+
 ### MAY 15th, 2018 - v1.1.2 Released - Butterfly - Hotfix 2
 
 Bug Fixes:
