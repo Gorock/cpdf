@@ -6,7 +6,7 @@
 ### SCRIPT:
 ### cpdf
 ### VERSION:
-### v1.2.2
+### v1.2.1
 ### DESCRIPTION:
 ### A script to make compressing pdf files more easily by
 ### automating gs commands
@@ -69,7 +69,7 @@ if first_arg == "help":
 """)
     sys.exit()
 if first_arg == "version":
-    print(f"{bold} \ncPDF v1.2.2\n {normal}")
+    print(f"{bold} \ncPDF v1.2.1\n {normal}")
     sys.exit()
 if number_of_args != 4:
     error_msg("This script only takes 3 specific arguments. Use the \"help\" argument to learn more.")
