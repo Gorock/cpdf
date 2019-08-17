@@ -19,11 +19,6 @@
 import os, datetime, sys, glob, re
 
 number_of_args = len(sys.argv)
-first_arg = str(sys.argv[1])
-
-compression_type = str(sys.argv[1])
-input_file = str(sys.argv[2])
-output_file = str(sys.argv[3])
 
 types = ["screen", "ebook", "printer", "prepress", "default"]
 
@@ -49,10 +44,11 @@ def ask_confirm(question):
 # Argument Handling
 if number_of_args <= 1:
     print(f""" {red} ERROR:{normal}
-This script only takes 3 specific
-arguments. Use the "help" argument to learn more.
+    This script only takes 3 specific
+    arguments. Use the "help" argument to learn more.
 """)
-
+    sys.exit()
+first_arg = str(sys.argv[1])
 if first_arg == "help":
     print(f"""This is a script to compress a pdf file with the convention of:
 
@@ -74,6 +70,12 @@ if first_arg == "version":
 if number_of_args != 4:
     error_msg("This script only takes 3 specific arguments. Use the \"help\" argument to learn more.")
     sys.exit()
+
+compression_type = str(sys.argv[1])
+input_file = str(sys.argv[2])
+output_file = str(sys.argv[3])
+
+    
 if first_arg not in types:
     error_msg(" Incorrect compression type. Please use the \"help\" argument to learn more.")
     sys.exit()
@@ -89,18 +91,17 @@ else:
     if re.search('[\\\\\|:;\`]', input_file):
         error_msg("Input file contains invalid characters such as / \\ : ; \`.... Exiting...\n")
         sys.exit()
+        # Check to make sure that the output file name is safe
+    if re.search('[\\\\\|:;\`]', outFile):
+        error_msg("Output file contains invalid characters such as / \\ : ; \`.... Exiting...\n")
+        sys.exit()
 
-     # Check to make sure that the output file name is safe
-     if re.search('[\\\\\|:;\`]', outFile):
-         error_msg("Output file contains invalid characters such as / \\ : ; \`.... Exiting...\n")
-         sys.exit()
-
-     if os.path.isfile(outFile):
-         if not outFile.endswith(".pdf"):
-             ask = f"\n  {yellow} WARNING: {normal}\"{outFile}\" does not end with \.pdf\. Are you sure you want to continue? (y/n)"
-             ask_confirm(ask)
-             ask = f"\n  {yellow} WARNING: {normal}\"{outFile}\" already exists. Are you sure you want to overwrite it? (y/n)"
-             ask_confirm(ask)
+    if os.path.isfile(outFile):
+        if not outFile.endswith(".pdf"):
+            ask = f"\n  {yellow} WARNING: {normal}\"{outFile}\" does not end with \.pdf\. Are you sure you want to continue? (y/n)"
+            ask_confirm(ask)
+            ask = f"\n  {yellow} WARNING: {normal}\"{outFile}\" already exists. Are you sure you want to overwrite it? (y/n)"
+            ask_confirm(ask)
 
 os.system(f"gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.6 -dPDFSETTINGS=/{compression_type}  -dNOPAUSE -dQUIET -dBATCH -sOutputFile=\"{outFile}\" \"{inFile}\"")
 print("\nCompressed!\n")
